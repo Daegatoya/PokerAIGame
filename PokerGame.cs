@@ -20,7 +20,7 @@ namespace PokerGame
             Joueur joueur = new Joueur();
             joueur.ses_Cartes = new string[2];
             int wallet = 1000;
-            int[] possibilité_Adverse = { 10, 50, 100, 500, 1000, joueur.monnaie };
+            int[] possibilité_Adverse = { 10, 50, 100, 500, 1000 };
             int mise = 0;
             int ma_mise = 0;
             Random random = new Random();
