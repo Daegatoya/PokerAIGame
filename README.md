@@ -18,7 +18,7 @@ if (ses_Numeros[0] == ses_Numeros[2])
   }
   ```
   
-  Si l'IA commence avec un début de flush,
+  Si l'IA commence avec un début de flush, 
   ```cs
   else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || 
   (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())))
