@@ -19,7 +19,7 @@ namespace PokerGame
             string[] ses_Numeros = {}; 
             Joueur joueur = new Joueur();
             joueur.ses_Cartes = new string[2];
-            int wallet = 1000;
+            int wallet = 2500;
             int[] possibilité_Adverse = { 10, 50, 100, 500, 1000};
             int mise = 0;
             int ma_mise = 0;
@@ -119,7 +119,6 @@ namespace PokerGame
             string[] les_Cartes = new string[nb];
             Random random = new Random();
             string carte;
-            
 
             for (int i = 0; i < nb; i++)
             {
@@ -694,8 +693,8 @@ namespace PokerGame
                             break;
                     }
                 }
-                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] || ses_Numeros[0] == les_Numéros[8] ||
-                  ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[6] || ses_Numeros[0] == les_Numéros[8])
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] ||
+                  ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[6])
                 {
                     result = random.Next(0, 6);
                     switch (result)
