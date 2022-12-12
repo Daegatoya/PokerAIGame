@@ -8,7 +8,6 @@ namespace PokerGame
         {
             public string nom;
             public string[] ses_Cartes;
-            public int monnaie;
         }
 
         public static void Main()
@@ -20,7 +19,6 @@ namespace PokerGame
             string[] ses_Numeros = {}; 
             Joueur joueur = new Joueur();
             joueur.ses_Cartes = new string[2];
-            joueur.monnaie = 1000;
             int wallet = 1000;
             int[] possibilité_Adverse = { 10, 50, 100, 500, 1000, joueur.monnaie };
             int mise = 0;
@@ -110,7 +108,7 @@ namespace PokerGame
                 Console.Write("\n\tQue souhaitez-vous faire : ");
                 ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
                 Console.WriteLine();
-                mise = Tour3(ref isCheck2, numéros_Communs3, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random);
+                mise = Tour4(ref isCheck2, numéros_Communs3, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random);
             } while (isCheck1 == false || isCheck2 == false);
 
             Console.Clear();
