@@ -84,7 +84,7 @@ Une fonction ```Fin();``` en void s'execute donc, c'est la fin de la partie,
         }
 ```
 
-## Informations
+## Résumé
 
 Ce programme est donc ma première essaie avec l'intelligence artificielle. N'ayant pas trop d'experience dans cette sphère, j'ai préféré m'en tenir qu'à l'intelligence programmé plutôt qu'au "Self Learning". Quelques erreurs peuvent être notifiées dans le code, il n'est pas à 100% optimisé, en effet. J'espère qu'il vous plaîra quand même, car il représente pour moi une grande étape dans mon parcour. Merci!
 
