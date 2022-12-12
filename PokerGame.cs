@@ -138,12 +138,12 @@ namespace PokerGame
         {
             if (ses_Numeros[0] == ses_Numeros[2])
             {
-                mise = possibilité_Adverse[random.Next(1, 3)];
+                mise = possibilité_Adverse[random.Next(1, 4)];
                 Console.WriteLine($"{nom} commence et mise {mise}");
             }
             else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())))
             {
-                mise = possibilité_Adverse[random.Next(1, 2)];
+                mise = possibilité_Adverse[random.Next(1, 3)];
                 Console.WriteLine($"{nom} commence et mise {mise}");
             }
             else
@@ -170,21 +170,25 @@ namespace PokerGame
                         break;
 
                     case 1:
-                        if(mise != ma_mise)
+                        if (mise != ma_mise)
                         {
-                            ma_mise = mise;
-                            wallet -= ma_mise;
-                            Console.Clear();
-                            Console.WriteLine("Vos cartes\tVotre argent");
-                            foreach (string carte in vos_Cartes)
+                            if (mise > wallet) Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                            else
                             {
-                                Console.Write(carte + " ");
-                            }
+                                ma_mise = mise;
+                                wallet -= ma_mise;
+                                Console.Clear();
+                                Console.WriteLine("Vos cartes\tVotre argent");
+                                foreach (string carte in vos_Cartes)
+                                {
+                                    Console.Write(carte + " ");
+                                }
 
-                            Console.Write($"\t\t{wallet}");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine($"Vous suivez et misez {mise}");
+                                Console.Write($"\t\t{wallet}");
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine($"Vous suivez et misez {mise}");
+                            }
                         }
                         else
                         {
@@ -332,7 +336,7 @@ namespace PokerGame
                     {
                         case 1:
                             mise = possibilité_Adverse[random.Next(1, 3)];
-                            Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
                             break;
                         default:
                             Console.WriteLine($"{nom} check");
@@ -346,8 +350,8 @@ namespace PokerGame
                     switch (result)
                     {
                         case 1:
-                            mise = possibilité_Adverse[random.Next(1, 2)];
-                            Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
+                            mise = possibilité_Adverse[random.Next(1, 3)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
                             break;
                         default:
                             Console.WriteLine($"{nom} check");
@@ -361,7 +365,7 @@ namespace PokerGame
                 if (ses_Numeros[0] == ses_Numeros[2])
                 {
                     mise = ma_mise;
-                    Console.WriteLine($"{nom} suit la mise de {mise - ma_mise}");
+                    Console.WriteLine($"{nom} suit la mise de {mise}");
                 }
                 else
                 {
@@ -391,45 +395,38 @@ namespace PokerGame
             {
                 if (ses_Numeros[0] == ses_Numeros[2])
                 {
-                    for (int i = 0; i < les_Numéros.Length; i++)
-                    {
-                        if (i != 1 || i != 3 || i != 5)
+                        result = random.Next(1, 6);
+                        switch (result)
                         {
-                            if (ses_Numeros[0] == les_Numéros[i])
-                            {
-                                result = random.Next(1, 6);
-                                switch (result)
-                                {
-                                    case 1:
-                                    case 2:
-                                        Console.WriteLine($"{nom} check");
-                                        isCheck = true;
-                                        break;
-                                    default:
-                                        mise = possibilité_Adverse[random.Next(1, 3)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                result = random.Next(1, 11);
-                                switch (result)
-                                {
-                                    case 1:
-                                        mise = possibilité_Adverse[random.Next(1, 2)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                                        break;
-                                    default:
-                                        Console.WriteLine($"{nom} check");
-                                        isCheck = true;
-                                        break;
-                                }
-                            }
+                            case 1:
+                            case 2:
+                                Console.WriteLine($"{nom} check");
+                                isCheck = true;
+                                break;
+                            default:
+                                mise = possibilité_Adverse[random.Next(1, 4)];
+                                Console.WriteLine($"{nom} monte la mise de {mise}");
+                                break;
                         }
+                }
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] ||
+  ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4])
+                {
+                    result = random.Next(0, 6);
+                    switch (result)
+                    {
+                        case 1:
+                        case 2:
+                            Console.WriteLine($"{nom} check");
+                            isCheck = true;
+                            break;
+                        default:
+                            mise = possibilité_Adverse[random.Next(1, 5)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
+                            break;
                     }
                 }
-                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5]))
+                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3]))
                 {
                     result = random.Next(1, 11);
                     switch (result)
@@ -441,8 +438,8 @@ namespace PokerGame
                             isCheck = true;
                             break;
                         default:
-                            mise = possibilité_Adverse[random.Next(1, 2)];
-                            Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
+                            mise = possibilité_Adverse[random.Next(1, 3)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
                             break;
                     }
                 }
@@ -483,7 +480,23 @@ namespace PokerGame
                         }
                     }
                 }
-                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5]))
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] ||
+                    ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4])
+                {
+                    result = random.Next(1, 11);
+                    switch (result)
+                    {
+                        case 1:
+                            Console.WriteLine($"{nom} se couche");
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                            break;
+                        default:
+                            mise = ma_mise;
+                            Console.WriteLine($"{nom} suit la mise de {mise}");
+                            break;
+                    }
+                }
+                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3]))
                 {
                     result = random.Next(1, 11);
                     switch (result)
@@ -516,12 +529,6 @@ namespace PokerGame
             {
                 if (ses_Numeros[0] == ses_Numeros[2])
                 {
-                    for (int i = 0; i < les_Numéros.Length; i++)
-                    {
-                        if (i != 1 || i != 3 || i != 5 || i != 7)
-                        {
-                            if (ses_Numeros[0] == les_Numéros[i])
-                            {
                                 result = random.Next(1, 6);
                                 switch (result)
                                 {
@@ -531,30 +538,12 @@ namespace PokerGame
                                         isCheck = true;
                                         break;
                                     default:
-                                        mise = possibilité_Adverse[random.Next(1, 3)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
+                                        mise = possibilité_Adverse[random.Next(1, 4)];
+                                        Console.WriteLine($"{nom} monte la mise de {mise}");
                                         break;
-                                }
-                            }
-                            else
-                            {
-                                result = random.Next(1, 11);
-                                switch (result)
-                                {
-                                    case 1:
-                                        mise = possibilité_Adverse[random.Next(1, 2)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                                        break;
-                                    default:
-                                        Console.WriteLine($"{nom} check");
-                                        isCheck = true;
-                                        break;
-                                }
-                            }
-                        }
                     }
                 }
-                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5] || ses_Numeros[3] == les_Numéros[7]))
+                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5]))
                 {
                     result = random.Next(1, 11);
                     switch (result)
@@ -566,8 +555,25 @@ namespace PokerGame
                             isCheck = true;
                             break;
                         default:
-                            mise = possibilité_Adverse[random.Next(1, 2)];
-                            Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
+                            mise = possibilité_Adverse[random.Next(1, 3)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
+                            break;
+                    }
+                }
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] ||
+  ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[6])
+                {
+                    result = random.Next(0, 6);
+                    switch (result)
+                    {
+                        case 1:
+                        case 2:
+                            Console.WriteLine($"{nom} check");
+                            isCheck = true;
+                            break;
+                        default:
+                            mise = possibilité_Adverse[random.Next(1, 5)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
                             break;
                     }
                 }
@@ -584,6 +590,140 @@ namespace PokerGame
                     for (int i = 0; i < les_Numéros.Length; i++)
                     {
                         if (i != 1 || i != 3 || i != 5 || i != 7)
+                        {
+                            if (ses_Numeros[0] == les_Numéros[i])
+                            {
+                                mise = ma_mise;
+                                Console.WriteLine($"{nom} suit la mise de {mise}");
+                            }
+                        }
+                        else
+                        {
+                            result = random.Next(1, 11);
+                            switch (result)
+                            {
+                                case 1:
+                                    Console.WriteLine($"{nom} se couche");
+                                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                                    break;
+                                default:
+                                    mise = ma_mise;
+                                    Console.WriteLine($"{nom} suit la mise de {mise}");
+                                    break;
+                            }
+                        }
+                    }
+                }
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] ||
+                    ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[6])
+                {
+                    result = random.Next(1, 11);
+                    switch (result)
+                    {
+                        case 1:
+                            Console.WriteLine($"{nom} se couche");
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                            break;
+                        default:
+                            mise = ma_mise;
+                            Console.WriteLine($"{nom} suit la mise de {mise}");
+                            break;
+                    }
+                }
+                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5]))
+                {
+                    result = random.Next(1, 11);
+                    switch (result)
+                    {
+                        case 1:
+                        case 2:
+                            Console.WriteLine($"{nom} se couche");
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                            break;
+                        default:
+                            mise = ma_mise;
+                            Console.WriteLine($"{nom} suit la mise de {mise}");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{nom} se couche");
+                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
+                }
+            }
+            return mise;
+        }
+
+        public static int Tour4(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
+        {
+            int result;
+
+            if (mise == ma_mise)
+            {
+                if (ses_Numeros[0] == ses_Numeros[2])
+                {
+                                result = random.Next(0, 6);
+                                switch (result)
+                                {
+                                    case 1:
+                                    case 2:
+                                        Console.WriteLine($"{nom} check");
+                                        isCheck = true;
+                                        break;
+                                    default:
+                                        mise = possibilité_Adverse[random.Next(1, 5)];
+                                        Console.WriteLine($"{nom} monte la mise de {mise}");
+                                        break;
+                                }
+                            }
+                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5] || ses_Numeros[3] == les_Numéros[7]))
+                {
+                    result = random.Next(1, 11);
+                    switch (result)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            Console.WriteLine($"{nom} check");
+                            isCheck = true;
+                            break;
+                        default:
+                            mise = possibilité_Adverse[random.Next(1, 3)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
+                            break;
+                    }
+                }
+                else if (ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] || ses_Numeros[0] == les_Numéros[8] ||
+                  ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[6] || ses_Numeros[0] == les_Numéros[8])
+                {
+                    result = random.Next(0, 6);
+                    switch (result)
+                    {
+                        case 1:
+                        case 2:
+                            Console.WriteLine($"{nom} check");
+                            isCheck = true;
+                            break;
+                        default:
+                            mise = possibilité_Adverse[random.Next(1, 5)];
+                            Console.WriteLine($"{nom} monte la mise de {mise}");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{nom} check");
+                    isCheck = true;
+                }
+            }
+            else
+            {
+                if (ses_Numeros[0] == ses_Numeros[2])
+                {
+                    for (int i = 0; i < les_Numéros.Length; i++)
+                    {
+                        if (i != 1 || i != 3 || i != 5 || i != 7 || i != 9)
                         {
                             if (ses_Numeros[0] == les_Numéros[i])
                             {
@@ -624,122 +764,13 @@ namespace PokerGame
                             break;
                     }
                 }
-                else
-                {
-                    Console.WriteLine($"{nom} se couche");
-                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
-                }
-            }
-            return mise;
-        }
-
-        public static int Tour4(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
-        {
-            int result;
-
-            if (mise == ma_mise)
-            {
-                if (ses_Numeros[0] == ses_Numeros[2])
-                {
-                    for (int i = 0; i < les_Numéros.Length; i++)
-                    {
-                        if (i != 1 || i != 3 || i != 5 || i != 7 || i != 9)
-                        {
-                            if (ses_Numeros[0] == les_Numéros[i])
-                            {
-                                result = random.Next(1, 6);
-                                switch (result)
-                                {
-                                    case 1:
-                                    case 2:
-                                        Console.WriteLine($"{nom} check");
-                                        isCheck = true;
-                                        break;
-                                    default:
-                                        mise = possibilité_Adverse[random.Next(1, 5)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                result = random.Next(1, 11);
-                                switch (result)
-                                {
-                                    case 1:
-                                        mise = possibilité_Adverse[random.Next(1, 3)];
-                                        Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                                        break;
-                                    default:
-                                        Console.WriteLine($"{nom} check");
-                                        isCheck = true;
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5] || ses_Numeros[3] == les_Numéros[7] || ses_Numeros[3] == les_Numéros[9]))
+                else if(ses_Numeros[2] == les_Numéros[0] || ses_Numeros[2] == les_Numéros[2] || ses_Numeros[2] == les_Numéros[4] || ses_Numeros[2] == les_Numéros[6] || ses_Numeros[0] == les_Numéros[8] ||
+                    ses_Numeros[0] == les_Numéros[0] || ses_Numeros[0] == les_Numéros[2] || ses_Numeros[0] == les_Numéros[4] || ses_Numeros[0] == les_Numéros[8])
                 {
                     result = random.Next(1, 11);
                     switch (result)
                     {
                         case 1:
-                        case 2:
-                        case 3:
-                            Console.WriteLine($"{nom} check");
-                            isCheck = true;
-                            break;
-                        default:
-                            mise = possibilité_Adverse[random.Next(1, 3)];
-                            Console.WriteLine($"{nom} monte la mise de {mise - ma_mise}");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{nom} check");
-                    isCheck = true;
-                }
-            }
-            else
-            {
-                if (ses_Numeros[0] == ses_Numeros[2])
-                {
-                    for (int i = 0; i < les_Numéros.Length; i++)
-                    {
-                        if (i != 1 || i != 3 || i != 5 || i != 7 || i != 9)
-                        {
-                            if (ses_Numeros[0] == les_Numéros[i])
-                            {
-                                mise = ma_mise;
-                                Console.WriteLine($"{nom} suit la mise de {mise}");
-                            }
-                        }
-                        else
-                        {
-                            result = random.Next(1, 11);
-                            switch (result)
-                            {
-                                case 1:
-                                    Console.WriteLine($"{nom} se couche");
-                                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
-                                    break;
-                                default:
-                                    mise = ma_mise;
-                                    Console.WriteLine($"{nom} suit la mise de {mise}");
-                                    break;
-                            }
-                        }
-                    }
-                }
-                else if (ses_Numeros[1] == ses_Numeros[3] && ((ses_Numeros[0] == (int.Parse(ses_Numeros[2]) + 1).ToString()) || (ses_Numeros[0] == (int.Parse(ses_Numeros[2]) - 1).ToString())) && (ses_Numeros[3] == les_Numéros[1] || ses_Numeros[3] == les_Numéros[3] || ses_Numeros[3] == les_Numéros[5] || ses_Numeros[3] == les_Numéros[7] || ses_Numeros[3] == les_Numéros[9]))
-                {
-                    result = random.Next(1, 11);
-                    switch (result)
-                    {
-                        case 1:
-                        case 2:
                             Console.WriteLine($"{nom} se couche");
                             Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                             break;
