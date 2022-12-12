@@ -20,7 +20,7 @@ namespace PokerGame
             Joueur joueur = new Joueur();
             joueur.ses_Cartes = new string[2];
             int wallet = 1000;
-            int[] possibilité_Adverse = { 10, 50, 100, 500, 1000 };
+            int[] possibilité_Adverse = { 10, 50, 100, 500, 1000};
             int mise = 0;
             int ma_mise = 0;
             Random random = new Random();
@@ -54,15 +54,15 @@ namespace PokerGame
 
             Console.WriteLine("\n\n\t1. Check/Follow\t  2. Fold\t  3. Raise");
             Console.Write("\n\tQue souhaitez-vous faire : ");
-            ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
+            ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet, joueur.ses_Cartes, cartes_Communes);
             Console.WriteLine();
 
             do
             {
-                mise = Tour(ref isCheck2, joueur.nom, mise, possibilité_Adverse, random, ses_Numeros, ma_mise);
+                mise = Tour(ref isCheck2, joueur.nom, mise, possibilité_Adverse, random, ses_Numeros, ma_mise, joueur.ses_Cartes, vos_Cartes, cartes_Communes);
                 Console.WriteLine("\n\n\t1. Check/Follow\t  2. Fold\t  3. Raise");
                 Console.Write("\n\tQue souhaitez-vous faire : ");
-                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
+                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet, joueur.ses_Cartes, cartes_Communes);
                 Console.WriteLine();
             } while (isCheck1 == false || isCheck2 == false);
 
@@ -76,9 +76,9 @@ namespace PokerGame
             {
                 Console.WriteLine("\n\n\t1. Check/Follow\t  2. Fold\t  3. Raise");
                 Console.Write("\n\tQue souhaitez-vous faire : ");
-                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
+                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet, joueur.ses_Cartes, cartes_Communes);
                 Console.WriteLine();
-                mise = Tour2(ref isCheck2, numéros_Communs, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random);
+                mise = Tour2(ref isCheck2, numéros_Communs, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random, joueur.ses_Cartes, vos_Cartes, cartes_Communes);
             } while (isCheck1 == false || isCheck2 == false);
 
             mise = 0;
@@ -91,9 +91,9 @@ namespace PokerGame
             {
                 Console.WriteLine("\n\n\t1. Check/Follow\t  2. Fold\t  3. Raise");
                 Console.Write("\n\tQue souhaitez-vous faire : ");
-                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
+                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet, joueur.ses_Cartes, cartes_Communes);
                 Console.WriteLine();
-                mise = Tour3(ref isCheck2, numéros_Communs2, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random);
+                mise = Tour3(ref isCheck2, numéros_Communs2, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random, joueur.ses_Cartes, vos_Cartes, cartes_Communes);
             } while (isCheck1 == false || isCheck2 == false);
 
             mise = 0;
@@ -106,36 +106,12 @@ namespace PokerGame
             {
                 Console.WriteLine("\n\n\t1. Check/Follow\t  2. Fold\t  3. Raise");
                 Console.Write("\n\tQue souhaitez-vous faire : ");
-                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet);
+                ma_mise = Action(ref isCheck1, mise, ma_mise, vos_Cartes, ref wallet, joueur.ses_Cartes, cartes_Communes);
                 Console.WriteLine();
-                mise = Tour4(ref isCheck2, numéros_Communs3, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random);
+                mise = Tour4(ref isCheck2, numéros_Communs3, joueur.nom, ses_Numeros, mise, ma_mise, possibilité_Adverse, random, joueur.ses_Cartes, vos_Cartes, cartes_Communes);
             } while (isCheck1 == false || isCheck2 == false);
 
-            Console.Clear();
-            Console.WriteLine("-----------------");
-            Console.WriteLine("Résultats finaux");
-            Console.WriteLine("-----------------");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Vos cartes\t\tCartes adverse\t\tCartes communes");
-
-            foreach (string carte in vos_Cartes)
-            {
-                Console.Write(carte + " ");
-            }
-            Console.Write("\t\t\t");
-            foreach(string carte in joueur.ses_Cartes)
-            {
-                Console.Write(carte + " ");
-            }
-            Console.Write("\t\t\t");
-            foreach (string carte in cartes_Communes)
-            {
-                Console.Write(carte + " ");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Merci d'avoir joué!");
+            Fin(vos_Cartes, joueur.ses_Cartes, cartes_Communes);
         }
 
         public static string[] Tirage(string[] logos, string[] cartes, int nb, ref List<string> cartes_Tirées)
@@ -178,7 +154,7 @@ namespace PokerGame
             return mise;
         }
 
-        public static int Action(ref bool isCheck, int mise, int ma_mise, string[] vos_Cartes, ref int wallet)
+        public static int Action(ref bool isCheck, int mise, int ma_mise, string[] vos_Cartes, ref int wallet, string[] ses_Cartes, string[] cartes_Communes)
         {
             int output;
             int? new_Mise;
@@ -231,7 +207,7 @@ namespace PokerGame
                     case 2:
                         Console.Clear();
                         Console.WriteLine("\nVous vous couchez. Fin de la manche.");
-                        Environment.Exit(0x1);
+                        Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                         break;
 
                     case 3:
@@ -343,7 +319,7 @@ namespace PokerGame
             return nouveaux_Numéros;
         }
 
-        public static int Tour(ref bool isCheck, string nom, int mise, int[] possibilité_Adverse, Random random, string[] ses_Numeros, int ma_mise)
+        public static int Tour(ref bool isCheck, string nom, int mise, int[] possibilité_Adverse, Random random, string[] ses_Numeros, int ma_mise, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
         {
             int result;
 
@@ -394,6 +370,7 @@ namespace PokerGame
                     {
                         case 1:
                             Console.WriteLine($"{nom} se couche");
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                             break;
                         default:
                             mise = ma_mise;
@@ -406,7 +383,7 @@ namespace PokerGame
         }
 
 
-        public static int Tour2(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random)
+        public static int Tour2(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
         {
             int result;
 
@@ -496,7 +473,7 @@ namespace PokerGame
                             {
                                 case 1:
                                     Console.WriteLine($"{nom} se couche");
-                                    Environment.Exit(0x1);
+                                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                                     break;
                                 default:
                                     mise = ma_mise;
@@ -514,7 +491,7 @@ namespace PokerGame
                         case 1:
                         case 2:
                             Console.WriteLine($"{nom} se couche");
-                            Environment.Exit(0x1);
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                             break;
                         default:
                             mise = ma_mise;
@@ -525,13 +502,13 @@ namespace PokerGame
                 else
                 {
                     Console.WriteLine($"{nom} se couche");
-                    Environment.Exit(0x1);
+                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                 }
             }
             return mise;
         }
 
-        public static int Tour3(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random)
+        public static int Tour3(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
         {
             int result;
 
@@ -621,7 +598,7 @@ namespace PokerGame
                             {
                                 case 1:
                                     Console.WriteLine($"{nom} se couche");
-                                    Environment.Exit(0x1);
+                                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                                     break;
                                 default:
                                     mise = ma_mise;
@@ -639,7 +616,7 @@ namespace PokerGame
                         case 1:
                         case 2:
                             Console.WriteLine($"{nom} se couche");
-                            Environment.Exit(0x1);
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                             break;
                         default:
                             mise = ma_mise;
@@ -650,13 +627,13 @@ namespace PokerGame
                 else
                 {
                     Console.WriteLine($"{nom} se couche");
-                    Environment.Exit(0x1);
+                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                 }
             }
             return mise;
         }
 
-        public static int Tour4(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random)
+        public static int Tour4(ref bool isCheck, string[] les_Numéros, string nom, string[] ses_Numeros, int mise, int ma_mise, int[] possibilité_Adverse, Random random, string[] ses_Cartes, string[] vos_Cartes, string[] cartes_Communes)
         {
             int result;
 
@@ -746,7 +723,7 @@ namespace PokerGame
                             {
                                 case 1:
                                     Console.WriteLine($"{nom} se couche");
-                                    Environment.Exit(0x1);
+                                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                                     break;
                                 default:
                                     mise = ma_mise;
@@ -764,7 +741,7 @@ namespace PokerGame
                         case 1:
                         case 2:
                             Console.WriteLine($"{nom} se couche");
-                            Environment.Exit(0x1);
+                            Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                             break;
                         default:
                             mise = ma_mise;
@@ -775,7 +752,7 @@ namespace PokerGame
                 else
                 {
                     Console.WriteLine($"{nom} se couche");
-                    Environment.Exit(0x1);
+                    Fin(vos_Cartes, ses_Cartes, cartes_Communes);
                 }
             }
             return mise;
@@ -914,6 +891,37 @@ namespace PokerGame
                 }
             }
             return resultat;
+        }
+
+        public static void Fin(string[] vos_Cartes, string[] ses_Cartes, string[] cartes_Communes)
+        {
+            Console.Clear();
+            Console.WriteLine("-----------------");
+            Console.WriteLine("Résultats finaux");
+            Console.WriteLine("-----------------");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Vos cartes\t\tCartes adverse\t\tCartes communes");
+
+            foreach (string carte in vos_Cartes)
+            {
+                Console.Write(carte + " ");
+            }
+            Console.Write("\t\t\t");
+            foreach (string carte in ses_Cartes)
+            {
+                Console.Write(carte + " ");
+            }
+            Console.Write("\t\t\t");
+            foreach (string carte in cartes_Communes)
+            {
+                Console.Write(carte + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Merci d'avoir joué!");
+
+            Environment.Exit(0x1);
         }
     }
 }
