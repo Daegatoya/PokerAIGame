@@ -90,7 +90,7 @@ Ce programme est donc ma première essaie avec l'intelligence artificielle. N'ay
 
 ---
 
-**With love, Elizabeth** ❤️
+**With love, Daegatoya** ❤️
          
 <p align="center">
 
