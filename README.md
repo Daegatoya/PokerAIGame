@@ -94,7 +94,5 @@ Ce programme est donc ma première essaie avec l'intelligence artificielle. N'ay
          
 <p align="center">
 
-![My Discord](https://discord-readme-badge.vercel.app/api?id=852663698803130389)
+[![Discord Presence](https://lanyard.cnrad.dev/api/852663698803130389?theme=dark&animated=false&hideDiscrim=true)](https://discord.com/users/852663698803130389)
 </p>
-
-                                                    Make it 1 or 0.
